@@ -8,7 +8,9 @@ defmodule Rumbl.Repo do
       [
           %Rumbl.User{id: "1", name: "José", username: "josevalim", password: "elixir"},
           %Rumbl.User{id: "2", name: "Bruce", username: "redrapids", password: "7langs"},
-          %Rumbl.User{id: "3", name: "Chris", username: "chrismccord", password: "phx"}
+          %Rumbl.User{id: "4", name: "Chris", username: "chrismccord", password: "phx"},
+          %Rumbl.User{id: "5", name: "Joško", username: "jošković", password: "još"},
+          %Rumbl.User{id: "6", name: "Goran", username: "popi", password: "345"}
       ]
   end
 
