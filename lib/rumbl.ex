@@ -10,7 +10,8 @@ defmodule Rumbl do
     children = [
       # Start the Ecto repository
 
-      # LINIJA ISPOD JE KOMENTIRANA
+      # linija ispod je komentirana je komentirana ako ne zelim imati bazu
+      # starta ecto repository
       supervisor(Rumbl.Repo, []),
       # Start the endpoint when the application starts
       supervisor(Rumbl.Endpoint, []),
