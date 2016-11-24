@@ -28,6 +28,6 @@ defmodule Rumbl.UserController do
 
         conn
         |> put_flash(:info, "#{user.name} created!")
-        |> redirect(to: user_parh(conn, :index))
+        |> redirect(to: user_path(conn, :index))
     end
 end
