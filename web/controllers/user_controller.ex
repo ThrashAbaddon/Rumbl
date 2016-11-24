@@ -1,6 +1,8 @@
 defmodule Rumbl.UserController do
     use Rumbl.Web, :controller
 
+    alias Rumbl.User
+
 
     def index(conn, _params) do
         # ´Repo.all´ fetches all entries from the data store matching the given query
