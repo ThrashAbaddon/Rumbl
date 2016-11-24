@@ -24,3 +24,4 @@ erl_crash.dump
 /config/prod.secret.exs
 nebitan_file.ex
 prod.secret.exs
+settings.json
