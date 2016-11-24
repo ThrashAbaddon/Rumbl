@@ -11,7 +11,8 @@ defmodule Rumbl.User do
     end
 
     @doc """
-    Provjerava da li User struct sadrži `name` i `username` te da li `username` odgovara duljini od 1 do 20 znakova. Opcionalnih polja nema.
+    Provjerava da li User struct sadrži `name` i `username` te da li `username` 
+    odgovara duljini od 1 do 20 znakova. Opcionalnih polja nema.
 
     ## Parametri
 
