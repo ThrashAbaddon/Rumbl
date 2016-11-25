@@ -41,8 +41,8 @@ defmodule Rumbl.User do
     @doc """
     Funkcija koje izvršava password hashing u changesetu.
     Vrši se provjera da li je changeset validan te ako je onda se rezultat
-    stavlja u changeset kao `password_hash`. Ako changeset nije validan onda
-    se on samo vrati nazad.
+    stavlja u changeset kao `password_hash` koristeći bcrypt algoritam. Ako
+    changeset nije validan onda se on samo vrati nazad.
     """
     defp _put_pass_hash(changeset) do
         case changeset do
