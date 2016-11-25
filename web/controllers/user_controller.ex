@@ -24,7 +24,7 @@ defmodule Rumbl.UserController do
 
     @doc """
     Kreira novog Usera u bazi. Ako su uneseni podaci ok onda je unos u bazu izvršen
-    te otvara se stranica sa svim korisnicima u bazi. Ako uneseni podaci nisu ok onda
+    te se otvara stranica sa svim korisnicima u bazi. Ako uneseni podaci nisu ok onda
     se ne ostvari unos novog korisnika i pojavi se poruka da do unosa nije došlo.
 
     ## Parametri
