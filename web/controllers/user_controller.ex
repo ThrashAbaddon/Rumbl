@@ -22,6 +22,17 @@ defmodule Rumbl.UserController do
     end
 
 
+    @doc """
+    Kreira novog Usera u bazi. Ako su uneseni podaci ok onda je unos u bazu izvršen
+    te otvara se stranica sa svim korisnicima u bazi. Ako uneseni podaci nisu ok onda
+    se ne ostvari unos novog korisnika i pojavi se poruka da do unosa nije došlo.
+
+    ## Parametri
+
+    - conn - konekcija
+
+    - user_params - `user_params` je mapa dobivena za pattern match sa "user"
+    """
     def create(conn, %{"user" => user_params}) do
         changeset = User.changeset(%User{}, user_params)
 
