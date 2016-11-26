@@ -58,6 +58,18 @@ Ovaj modul definira `Rumbl.Auth` struct.
         |> configure_session(renew: true)
     end
 
+
+
+    @doc """
+    Odlogira korisnika tako da dropa session.
+
+    ## Parametri
+
+    - `conn` - konekcija
+    """
+    def logout(conn) do
+        Plug.Conn.configure_session(conn, drop: true)
+    end
     
     
     @doc """
@@ -81,7 +93,7 @@ Ovaj modul definira `Rumbl.Auth` struct.
         user = repo.get_by(Rumbl.User, username: username)
         # nađi prvi koji je true
         cond do
-            user && checkpw(given_pass, user[:password_hash]) ->
+            user && checkpw(given_pass, user.password_hash) ->
                 {:ok, login(conn, user)}
             user ->
                 {:error, :unauthorized, conn}

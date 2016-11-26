@@ -13,6 +13,21 @@ defmodule Rumbl.SessionController do
         render(conn, "new.html")
     end
 
+
+
+
+    @doc """
+    Briše session i preusmjerava na početak web sajta.
+    """
+    def delete(conn, _) do
+        conn
+        |> Rumbl.Auth.logout()
+        |> redirect(to: page_path(conn, :index))
+    end
+
+
+
+
     @doc """
     Create akcija uzme `username` i `password` i ulogira na ispravno unesene podatke.
     Ako login ne uspije onda se renderira /session/new
