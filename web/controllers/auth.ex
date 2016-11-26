@@ -5,6 +5,7 @@ Ovo je authentication plug.
 Ovaj modul definira `Rumbl.Auth` struct.
 """
     import Plug.Conn
+    import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
     @doc """
     Inicijalizira repozitorij iz danog spremnika opcija tražeći `repo` u
