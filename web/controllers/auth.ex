@@ -87,7 +87,6 @@ Ovaj modul definira `Rumbl.Auth` struct.
             true ->
                 dummy_checkpw()
                 {:error, :not_found, conn} 
-            
         end
     end
 end
