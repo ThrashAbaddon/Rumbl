@@ -37,7 +37,7 @@ Ovaj modul definira `Rumbl.Auth` struct.
     def call(conn, repo) do
         user_id = get_session(conn, :user_id)
         user    = user_id && repo.get(Rumbl.User, user_id)
-        conn = assign(conn, :current_user, user)
+        assign(conn, :current_user, user)
     end
 
 
@@ -77,8 +77,8 @@ Ovaj modul definira `Rumbl.Auth` struct.
     - `opts` - opcije
     """
     def login_by_username_and_pass(conn, username, given_pass, opts) do
-        repo = Keyword.fetch!(conn, :repo)
-        user = repo.get_by(Repo.User, username: username)
+        repo = Keyword.fetch!(opts, :repo)
+        user = repo.get_by(Rumbl.User, username: username)
         # nađi prvi koji je true
         cond do
             user && checkpw(given_pass, user[:password_hash]) ->
