@@ -7,8 +7,13 @@ Ovaj modul definira `Rumbl.Auth` struct.
     import Plug.Conn
 
     @doc """
-    Uzme dane opcije vadeći repozitorij iz spremnika. Ako repozitorij ne postoji
-    onda dođe do exceptiona.
+    Inicijalizira repozitorij iz danog spremnika opcija tražeći `repo` u
+    tom spremniku. Ako repozitorij ne postoji onda dođe do exceptiona.
+
+    ## Parametri
+
+    - `opts` - set opcija
+
     """
     def init(opts) do
         Keyword.fetch!(opts, :repo)
