@@ -66,12 +66,12 @@ defmodule Rumbl.UserController do
     - conn - konekcija
     """
     defp authenticate(conn) do
-        if conn.assign.current_user do
+        if conn.assigns.current_user do
             conn
         else
             conn
             |> put_flash(:error, "You must be logged in to access this page.")
-            |> redirect_to(to: page_path(conn, :index))
+            |> redirect(to: page_path(conn, :index))
             |> halt()    
         end
     end
