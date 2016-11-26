@@ -56,4 +56,36 @@ Ovaj modul definira `Rumbl.Auth` struct.
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
     end
+
+    
+    
+    @doc """
+    Provjerava da li se dani `username` i `given_pass` nalaze u repozitoriju.
+    Ako da onda se poziva `login/2`, a ako ne onda je `error`.
+
+    ## Parametri
+
+    - `conn` - konekcija
+
+    - `username` - username koji korisnik unese
+
+    - `given_pass` - password koji korisnik unese
+
+    - `opts` - opcije
+    """
+    def login_by_username_and_pass(conn, username, given_pass, opts) do
+        repo = Keyword.fetch!(conn, :repo)
+        user = repo.get_by(Repo.User, username: username)
+        # nađi prvi koji je true
+        cond do
+            user && checkpw(given_pass, user[:password_hash]) ->
+                {:ok, login(conn, user)}
+            user ->
+                {:error, :unauthorized, conn}
+            true ->
+                dummy_checkpw()
+                {:error, :not_found, conn} 
+            
+        end
+    end
 end
