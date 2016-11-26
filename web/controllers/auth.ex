@@ -61,7 +61,9 @@ Ovaj modul definira `Rumbl.Auth` struct.
     
     @doc """
     Provjerava da li se dani `username` i `given_pass` nalaze u repozitoriju.
-    Ako da onda se poziva `login/2`, a ako ne onda je `error`.
+    Ako da onda se poziva `login/2` da se podesi session. Ako se `username`
+    nalazi u repozitoriju ali ne i `given_pass` onda se vrati `unauthorized`.
+    Ako `user` nije pronađen onda se vrati `error`.
 
     ## Parametri
 
