@@ -75,7 +75,7 @@ defmodule Rumbl.UserController do
     - conn - konekcija
     """
     defp authenticate(conn) do
-        if conn.assigns.current_user do
+        if conn.assigns[:current_user] do
             conn
         else
             conn
