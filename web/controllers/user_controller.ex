@@ -17,14 +17,23 @@ defmodule Rumbl.UserController do
 
 
     def show(conn, %{"id" => id}) do
-        # `Repo.get` fetches a single struct from the data store where the primary key matches the given id.
-        user = Repo.get(Rumbl.User, id)
-        render(conn, "show.html", user: user)
+        case authenticate(conn) do
+            %Plug.Conn{halted: true} = conn ->
+                conn
+            conn ->
+                user = Repo.get(Rumbl.User, id)
+                render(conn, "index.html", user: user)
+        end
     end
 
     def new(conn, _params) do
-        changeset = User.changeset(%User{})
-        render(conn, "new.html", changeset: changeset)
+        case authenticate(conn) do
+            %Plug.Conn{halted: true} = conn ->
+                    conn
+            conn ->
+                changeset = User.changeset(%User{})
+                render(conn, "new.html", changeset: changeset)
+        end
     end
 
 
