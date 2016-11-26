@@ -30,7 +30,7 @@ defmodule Rumbl.UserController do
     """
     def show(conn, %{"id" => id}) do
         user = Repo.get(Rumbl.User, id)
-        render(conn, "index.html", user: user)
+        render(conn, "show.html", user: user)
     end
 
     @doc """
