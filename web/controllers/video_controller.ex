@@ -27,7 +27,10 @@ defmodule Rumbl.VideoController do
   end
 
   def create(conn, %{"video" => video_params}) do
-    changeset = Video.changeset(%Video{}, video_params)
+    changeset = 
+      conn.assigns.current_user
+      |> build_assoc(:videos)
+      |> Video.changeset(video_params)
 
     case Repo.insert(changeset) do
       {:ok, _video} ->
@@ -76,10 +79,11 @@ defmodule Rumbl.VideoController do
     |> redirect(to: video_path(conn, :index))
   end
 
-  @doc """
+
+  # @doc """
   
-  """
-  def action(conn, _) do
-    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
-  end
+  # """
+  # def action(conn, _) do
+  #   apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
+  # end
 end
