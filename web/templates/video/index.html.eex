@@ -14,6 +14,7 @@
   <tbody>
 <%= for video <- @videos do %>
     <tr>
+    <!-- TODO implementiraj ograničenu veličinu polja kod prikazivanja zbog predugačkih linkova -->
       <td><%= video.user_id %></td>
       <td><%= video.url %></td>
       <td><%= video.title %></td>
