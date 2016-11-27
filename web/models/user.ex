@@ -21,7 +21,7 @@ defmodule Rumbl.User do
     
     - `params` - opcionalni parametri, ali nije poznato još kakvi točno.
     """
-    def changeset(model, params \\ :empty) do
+    def changeset(model, params \\ %{}) do
         model
         |> cast(params, ~w(name username), [])
         |> validate_length(:name, min: 1, max: 20)
