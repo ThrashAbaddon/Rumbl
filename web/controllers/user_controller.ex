@@ -1,7 +1,6 @@
 defmodule Rumbl.UserController do
     use Rumbl.Web, :controller
 
-    import Rumbl.Auth, only: [authenticate_user: 2]
 
     plug :authenticate_user when action in [:index, :show]
 
