@@ -1,6 +1,9 @@
 defmodule Rumbl.VideoController do
   use Rumbl.Web, :controller
 
+  # sanitiziranje praznih HTML formi iz "" u nil
+  plug :scrub_params, "video" when action in [:create, :update]
+
   alias Rumbl.Video
 
   def index(conn, _params) do
