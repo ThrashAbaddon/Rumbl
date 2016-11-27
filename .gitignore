@@ -25,3 +25,5 @@ erl_crash.dump
 nebitan_file.ex
 prod.secret.exs
 settings.json
+priv/repo/migrations/20161127085630_create_video.exs
+priv/repo/structure.sql
