@@ -11,7 +11,6 @@ defmodule Rumbl.VideoController do
   """
   def index(conn, _params, user) do
     videos = Repo.all(user_videos(user))
-    # IO.inspect videos
     render(conn, "index.html", videos: videos)
   end
 
@@ -21,18 +20,18 @@ defmodule Rumbl.VideoController do
   u konekciji tako da postoji informacija tko je spremio video
   u spremnik podataka.
   """
-  def new(conn, _params) do
+  def new(conn, _params, user) do
     changeset =
-      conn.assigns.current_user
+      user
       |> build_assoc(:videos) # wut
       |> Video.changeset()    # wut
-    IO.inspect changeset
+    # IO.inspect changeset
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"video" => video_params}) do
+  def create(conn, %{"video" => video_params}, user) do
     changeset = 
-      conn.assigns.current_user
+      user
       |> build_assoc(:videos)
       |> Video.changeset(video_params)
 
@@ -90,10 +89,10 @@ defmodule Rumbl.VideoController do
   end
 
 
-  # @doc """
-  
-  # """
-  # def action(conn, _) do
-  #   apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
-  # end
+  @doc """
+  Ovo izaziva živčani slom, pogotovo iza ponoći.
+  """
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
+  end
 end
