@@ -11,8 +11,18 @@ defmodule Rumbl.VideoController do
     render(conn, "index.html", videos: videos)
   end
 
+  @doc """
+  Kreira novi info o videu u spremniku podataka.
+  Za spremanje videa koristi se informacija o `current_user`
+  u konekciji tako da postoji informacija tko je spremio video
+  u spremnik podataka.
+  """
   def new(conn, _params) do
-    changeset = Video.changeset(%Video{})
+    changeset =
+      conn.assigns.current_user
+      |> build_assoc(:videos) # wut
+      |> Video.changeset()    # wut
+    IO.inspect changeset
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -64,5 +74,12 @@ defmodule Rumbl.VideoController do
     conn
     |> put_flash(:info, "Video deleted successfully.")
     |> redirect(to: video_path(conn, :index))
+  end
+
+  @doc """
+  
+  """
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
   end
 end
