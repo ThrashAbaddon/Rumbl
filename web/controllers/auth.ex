@@ -6,6 +6,9 @@ Ovaj modul definira `Rumbl.Auth` struct.
 """
     import Plug.Conn
     import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+    import Phoenix.Controller
+    
+    alias Rumbl.Router.Helpers
 
     @doc """
     Inicijalizira repozitorij iz danog spremnika opcija tražeći `repo` u
@@ -100,6 +103,30 @@ Ovaj modul definira `Rumbl.Auth` struct.
             true ->
                 dummy_checkpw()
                 {:error, :not_found, conn} 
+        end
+    end
+
+
+
+    @doc """
+    Provjerava da li je konekcija authenticated za trenutnog korisnika.
+    
+    Ako je konekcija authenticated za trenutnog korisnika onda se ništa ne desi,
+    a ako nije authenticated onda se otvori index stranica sa porukom da se ne
+    može pristupiti traženoj stranici dok se korisnik ne ulogira.
+
+    ## Parametri
+
+    - `conn` - konekcija
+    """
+    def authenticate_user(conn, _opts) do
+        if conn.assigns[:current_user] do
+            conn
+        else
+            conn
+            |> put_flash(:error, "You must be logged in to access this page.")
+            |> redirect(to: Helpers.page_path(conn, :index))
+            |> halt()    
         end
     end
 end

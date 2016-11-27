@@ -1,7 +1,9 @@
 defmodule Rumbl.UserController do
     use Rumbl.Web, :controller
 
-    plug :authenticate when action in [:index, :show]
+    import Rumbl.Auth
+
+    plug :authenticate_user when action in [:index, :show]
 
     alias Rumbl.User
 
@@ -68,30 +70,6 @@ defmodule Rumbl.UserController do
                 |> redirect(to: user_path(conn, :index))
             {:error, changeset} ->
                 render(conn, "new.html", changeset: changeset)
-        end
-    end
-
-
-
-    @doc """
-    Provjerava da li je konekcija authenticated za trenutnog korisnika.
-    
-    Ako je konekcija authenticated za trenutnog korisnika onda se ništa ne desi,
-    a ako nije authenticated onda se otvori index stranica sa porukom da se ne
-    može pristupiti traženoj stranici dok se korisnik ne ulogira.
-
-    ## Parametri
-
-    - `conn` - konekcija
-    """
-    defp authenticate(conn, _opts) do
-        if conn.assigns[:current_user] do
-            conn
-        else
-            conn
-            |> put_flash(:error, "You must be logged in to access this page.")
-            |> redirect(to: page_path(conn, :index))
-            |> halt()    
         end
     end
 end
