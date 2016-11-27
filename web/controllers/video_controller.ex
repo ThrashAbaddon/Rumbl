@@ -6,8 +6,12 @@ defmodule Rumbl.VideoController do
 
   alias Rumbl.Video
 
-  def index(conn, _params) do
-    videos = Repo.all(Video)
+  @doc """
+  Akcija koja renderira stranicu i prikaže sve videe od određenog usera.
+  """
+  def index(conn, _params, user) do
+    videos = Repo.all(user_videos(user))
+    # IO.inspect videos
     render(conn, "index.html", videos: videos)
   end
 
@@ -42,19 +46,20 @@ defmodule Rumbl.VideoController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    video = Repo.get!(Video, id)
+  def show(conn, %{"id" => id}, user) do
+    video = Repo.get!(user_videos(user), id)
+    # IO.inspect video
     render(conn, "show.html", video: video)
   end
 
-  def edit(conn, %{"id" => id}) do
-    video = Repo.get!(Video, id)
+  def edit(conn, %{"id" => id}, user) do
+    video = Repo.get!(user_videos(user), id)
     changeset = Video.changeset(video)
     render(conn, "edit.html", video: video, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "video" => video_params}) do
-    video = Repo.get!(Video, id)
+  def update(conn, %{"id" => id, "video" => video_params}, user) do
+    video = Repo.get!(user_videos(user), id)
     changeset = Video.changeset(video, video_params)
 
     case Repo.update(changeset) do
@@ -67,16 +72,21 @@ defmodule Rumbl.VideoController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    video = Repo.get!(Video, id)
-
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
+  def delete(conn, %{"id" => id}, user) do
+    video = Repo.get!(user_videos(user), id)
     Repo.delete!(video)
 
     conn
     |> put_flash(:info, "Video deleted successfully.")
     |> redirect(to: video_path(conn, :index))
+  end
+
+  @doc """
+  Funkcija koristi `assoc/2` funkciju da vrati upit svih videa koji su povezani
+  sa danim `user`om.
+  """
+  defp user_videos(user) do
+    assoc(user, :videos)
   end
 
 
