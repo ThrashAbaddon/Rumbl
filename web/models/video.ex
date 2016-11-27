@@ -13,7 +13,7 @@ defmodule Rumbl.Video do
   @required_fields ~w(url title description)
   @optional_fields ~w()
   @doc """
-  Builds a changeset based on the `struct` and `params`.
+  Builds a changeset based on the `model` and `params`.
   """
   def changeset(model, params \\ %{}) do
     model
