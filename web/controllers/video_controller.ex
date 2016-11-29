@@ -10,7 +10,8 @@ defmodule Rumbl.VideoController do
   Akcija koja renderira stranicu i prikaže sve videe od određenog usera.
   """
   def index(conn, _params, user) do
-    videos = Repo.all(user_videos(user))
+    # videos = Repo.all(user_videos(user))
+    videos = Repo.all(Video)    
     render(conn, "index.html", videos: videos)
   end
 
@@ -45,17 +46,54 @@ defmodule Rumbl.VideoController do
     end
   end
 
-  def show(conn, %{"id" => id}, user) do
-    video = Repo.get!(user_videos(user), id)
+  def show(conn, %{"id" => id}, _user) do
+    # video = Repo.get!(user_videos(user), id)
+    video = Repo.get(Rumbl.Video, id)
     # IO.inspect video
     render(conn, "show.html", video: video)
   end
 
-  def edit(conn, %{"id" => id}, user) do
-    video = Repo.get!(user_videos(user), id)
+  
+
+
+
+
+
+
+
+
+  #import Rumbl.SessionController, only: [current_user: 1] 
+  # TODO stavi usporedbu da li je trenutni user jednak useru
+  # koji je napravio video, ako je renderiraj edit page, ako nije
+  # onda vrati put_flash da ne može na tu stranicu jer ju on
+  # nije kreirao napravio
+  def edit(conn, %{"id" => video_id}, user) do
+    user_id = Plug.Conn.get_session(conn, :current_user)
+    # if :user_id in user_videos(user) do
+    #   IO.puts "\n------------*************** user_videos(user) == id *****************-----------------------\n"
+    # else
+    #   IO.puts "\n------------*************** user_videos(user) != id *****************-----------------------\n"
+    # end
+
+    case user_videos(user) do
+      {:ok,_}->
+        IO.puts "\n------------*************** user_videos(user) == id *****************-----------------------\n"
+      _ ->
+        IO.puts "\n------------*************** user_videos(user) != id *****************-----------------------\n"
+    end
+    video = Repo.get(user_videos(user), video_id)
     changeset = Video.changeset(video)
     render(conn, "edit.html", video: video, changeset: changeset)
   end
+
+
+
+
+
+
+
+
+
 
   def update(conn, %{"id" => id, "video" => video_params}, user) do
     video = Repo.get!(user_videos(user), id)
