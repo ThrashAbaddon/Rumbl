@@ -9,3 +9,14 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+# script that we can run every time we need to insert data in the database.
+
+
+alias Rumbl.Repo
+alias Rumbl.Category
+
+
+for category <- ~w(Action Drama Romance Comedy Sci-fi) do
+    Repo.insert!(%Category{name: category})
+end
